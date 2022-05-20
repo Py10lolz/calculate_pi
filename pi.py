@@ -64,3 +64,6 @@ def zeta_2(n=10000):
 	print(f"π ≈ {result} (using partial sum of zeta(2) with {n} terms)")
 for function in [leibniz_sum, wallis_product, ramanujan_sum, chudnovsky_algorithm, gaussian_integral, zeta_2]:
 	function()
+# make it have 69 lines coz why not.
+# 69 is a very funny number.
+# In fact, i don't understand why i am calculating π instead of 69. BRRRRR!!!
