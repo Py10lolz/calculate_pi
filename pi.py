@@ -1,4 +1,4 @@
-from math import factorial, sqrt, pi
+from math import factorial, sqrt, pi, exp
 
 # used in Ramanujan's formula for Pi
 
@@ -20,6 +20,13 @@ def product(function, lower_limit, upper_limit):
 	for num in range(lower_limit, upper_limit):
 		result *= function(num)
 	return result
+def integral(function, lower_limit, upper_limit, N=10000000):
+	# N is number of of slice;
+	delta_x = (upper_limit - lower_limit) / N
+	result = 0
+	for slice_num in range(1, 1+N):
+		result += function(lower_limit+delta_x*slice_num)
+	return result * delta_x
 # π formulas
 def leibniz_sum(n=100000):
 	if type(n) != int: raise Exception("the number of terms can only be an integer")
@@ -45,5 +52,15 @@ def chudnovsky_algorithm(n=2):
 	func = lambda n: 12*((-1)**n*factorial(6*n)*(A*n+B))/(factorial(3*n)*factorial(n)**3*C**(3*n + 1.5))
 	result = 1/summation(func, 0, n)
 	print(f"π ≈ {result} (using chudnovsky algorithm with {n} terms)")
-for function in [leibniz_sum, wallis_product, ramanujan_sum, chudnovsky_algorithm]:
+def gaussian_integral(upper_bound=10):
+	func = lambda n: exp(-n**2)
+	result = 4*(integral(func, 0, upper_bound))**2
+	print(f"π ≈ {result} (using gaussian integral. Upper bound is {upper_bound})")
+def zeta_2(n=10000):
+	if type(n) != int: raise Exception("the number of terms can only be an integer")
+	if n <= 0: raise Exception("the number of terms must be positive")
+	func = lambda n: n**2
+	result = sqrt(summation(func, 1, n+1)*6)
+	print(f"π ≈ {result} (using partial sum of zeta(2) with {n} terms)")
+for function in [leibniz_sum, wallis_product, ramanujan_sum, chudnovsky_algorithm, gaussian_integral, zeta_2]:
 	function()
